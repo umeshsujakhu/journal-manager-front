@@ -1,0 +1,75 @@
+<div
+  class="content-footer-links d-sm-flex align-items-center justify-content-between"
+>
+  <form #pageSizeForm="ngForm">
+    <div class="listing-items-footer">
+      <select
+        name="pageSize"
+        class="custom-select w-auto"
+        [(ngModel)]="pageSize"
+        (change)="changePageSize()"
+        tabindex="-1"
+        aria-hidden="true"
+      >
+        <option
+          *ngFor="let size of pageSizes; let index = index"
+          value="{{ size }}"
+          data-select2-id="6"
+        >
+          {{ size }}
+        </option>
+      </select>
+      <span>
+        Showing {{ itemsFrom }} to {{ itemsTo }} of
+        {{ pagination.total_records }} entries
+      </span>
+    </div>
+  </form>
+  <nav>
+    <ul class="pagination pagination-filled mg-b-0">
+      <li
+        class="page-item"
+        [ngClass]="{ disabled: pagination.current_page == 1 }"
+      >
+        <a
+          class="page-link page-link-icon"
+          (click)="decreasePageNumber()"
+          href="javascript:;"
+        >
+          Prev
+        </a>
+      </li>
+      <li
+        *ngFor="let pageNumber of pageNumbers; let index = index"
+        [class.active]="pagination.current_page == pageNumber"
+        class="page-item"
+      >
+        <a
+          *ngIf="pageNumber > -1"
+          class="page-link"
+          href="javascript:;"
+          (click)="changePage(pageNumber)"
+        >
+          {{ pageNumber }}
+        </a>
+        <a *ngIf="pageNumber === -1" class="page-link" href="javascript:;">
+          ...</a
+        >
+      </li>
+      <li
+        class="page-item"
+        [ngClass]="{
+          disabled: pagination.current_page == pagination.total_pages
+        }"
+      >
+        <a
+          class="page-link page-link-icon"
+          (click)="increasePageNumber()"
+          href="javascript:;"
+        >
+          Next
+        </a>
+      </li>
+    </ul>
+  </nav>
+</div>
